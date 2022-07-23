@@ -25,9 +25,9 @@ namespace AuthServer.Data.Repositories
             await _dbSet.AddAsync(entity);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _dbSet.AsQueryable();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
