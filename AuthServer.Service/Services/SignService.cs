@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthServer.Service
+namespace AuthServer.Service.Services
 {
     internal static class SignService
     {

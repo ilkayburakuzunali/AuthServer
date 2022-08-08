@@ -15,7 +15,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthServer.Service
+namespace AuthServer.Service.Services
 {
     public class TokenService : ITokenService
     {
@@ -30,7 +30,7 @@ namespace AuthServer.Service
 
         private string CreateRefreshToken()
         {
-            var numberByte = new Byte[32];
+            var numberByte = new byte[32];
 
             using var random = RandomNumberGenerator.Create();
 
@@ -39,7 +39,7 @@ namespace AuthServer.Service
             return Convert.ToBase64String(numberByte);
         }
 
-        private IEnumerable<Claim> GetClaims(UserApp userApp, List<String> audiences)
+        private IEnumerable<Claim> GetClaims(UserApp userApp, List<string> audiences)
         {
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier,userApp.Id),
