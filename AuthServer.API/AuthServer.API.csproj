@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\AuthServer.Service\AuthServer.Service.csproj" />
+    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AuthServer.Service\AuthServer.Service.csproj" />
-    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
+    <Folder Include="Controllers" />
   </ItemGroup>
 
 </Project>
