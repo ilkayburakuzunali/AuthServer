@@ -63,7 +63,6 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer=true,
         ValidateLifetime=true,
         
-        //Default eklenen ömür töleransýný kaldýrýr.
         ClockSkew=TimeSpan.Zero
     };
 });
