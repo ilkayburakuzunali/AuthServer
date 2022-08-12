@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using SharedLibrary.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//test
 //DI Register
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -63,7 +63,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer=true,
         ValidateLifetime=true,
         
-        //Default eklenen ömür töleransýný kaldýrýr.
+        //Default eklenen ï¿½mï¿½r tï¿½leransï¿½nï¿½ kaldï¿½rï¿½r.
         ClockSkew=TimeSpan.Zero
     };
 });
