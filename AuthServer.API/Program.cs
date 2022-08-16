@@ -35,13 +35,6 @@ builder.Services.AddIdentity<UserApp, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
 }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Configuration.GetSection("TokenOption").Get<CustomTokenOption>();
 builder.Configuration.GetSection("Clients").Get<List<Client>>();
 
@@ -49,9 +42,9 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,opts =>
+}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opts =>
 {
-    var tokenOptions = builder.Configuration.GetSection("TokenOption").Get<CustomTokenOption>();
+    var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();
     opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
     {
         ValidIssuer = tokenOptions.Issuer,
@@ -59,13 +52,21 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = SignService.GetSecurityKey(tokenOptions.SecurityKey),
 
         ValidateIssuerSigningKey = true,
-        ValidateAudience=true,
-        ValidateIssuer=true,
-        ValidateLifetime=true,
-        
-        ClockSkew=TimeSpan.Zero
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+
+        ClockSkew = TimeSpan.Zero
     };
 });
+
+
+// Add services to the container.
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
@@ -77,7 +78,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
