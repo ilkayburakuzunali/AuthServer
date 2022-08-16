@@ -35,8 +35,9 @@ builder.Services.AddIdentity<UserApp, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
 }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-builder.Configuration.GetSection("TokenOption").Get<CustomTokenOption>();
-builder.Configuration.GetSection("Clients").Get<List<Client>>();
+var services = builder.Services;
+services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
+services.Configure<List<Client>>(builder.Configuration.GetSection("Clients"));
 
 builder.Services.AddAuthentication(options =>
 {
