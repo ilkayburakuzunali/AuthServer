@@ -1,4 +1,13 @@
+using SharedLibrary.Configuration;
+using SharedLibrary.Extensitons;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var services = builder.Services;
+
+services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
+var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();
+services.AddCustomTokenAuth(tokenOptions);
 
 // Add services to the container.
 
@@ -17,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
