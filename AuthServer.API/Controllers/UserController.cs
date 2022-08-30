@@ -3,6 +3,7 @@ using AuthServer.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SharedLibrary.Exceptions;
 
 namespace AuthServer.API.Controllers
 {

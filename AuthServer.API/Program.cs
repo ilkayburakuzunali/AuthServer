@@ -6,10 +6,12 @@ using AuthServer.Core.UnitOfWork;
 using AuthServer.Data;
 using AuthServer.Data.Repositories;
 using AuthServer.Service.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SharedLibrary.Configuration;
+using SharedLibrary.Extensitons;
 using SharedLibrary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,9 +65,15 @@ builder.Services.AddAuthentication(options =>
 });
 
 
+
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(options =>
+{
+    options.RegisterValidatorsFromAssemblyContaining<Program>();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.UseCustomValidationResponse();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -78,7 +86,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCustomException();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
